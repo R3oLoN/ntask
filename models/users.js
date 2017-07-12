@@ -38,7 +38,6 @@ Users.pre('save', encryptPassword);
 
 function encryptPassword(next) {
     var user = this;
-    console.log(user.isModified('password'));
     if (!user.isModified('password')) return next();
     bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
         if (err) return next(err);

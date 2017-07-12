@@ -10,7 +10,6 @@ module.exports = app => {
         jwtFromRequest: ExtractJwt.fromAuthHeader()
     }
     passport.use(new Strategy(params, (payload, done) => {
-        console.log(payload);
         Users.findOne({ _id: payload.id }, (err, user) => {
             if (err) {
                 done(err, null);
