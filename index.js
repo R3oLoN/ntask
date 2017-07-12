@@ -8,7 +8,9 @@ const app = express();
 database(config.database);
 
 consign()
-    .include('models')
+    .include('libs/config.js')
+    .then('models')
+    .then('libs/auth.js')
     .then('libs/middleware.js')
     .then('routes')
     .then('libs/boot.js')

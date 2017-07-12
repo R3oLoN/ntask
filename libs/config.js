@@ -1,5 +1,7 @@
 module.exports = {
     database: 'mongodb://localhost/ntask',
     username: '',
-    password: ''
+    password: '',
+    jwtSecret: 'Nt@$K-AP1',
+    jwtSession: { session: false }
 }
