@@ -1,54 +1,54 @@
 import mongoose from 'mongoose';
 
 module.exports = app => {
-    const Tasks = mongoose.model('tasks');
+    const Users = mongoose.model('users');
 
-    app.route('/tasks')
+    app.route('/users')
         .get((req, res) => {
-            Tasks.find({})
-                .exec((err, tasks) => {
+            Users.find({})
+                .exec((err, users) => {
                     if (err) {
                         res.status(400).json(err);
                         return;
                     }
-                    res.json(tasks);
+                    res.json(users);
                 });
         })
         .post((req, res) => {
-            Tasks.create(req.body, (err, task) => {
+            Users.create(req.body, (err, user) => {
                 if (err) {
                     res.status(400).json(err);
                     return;
                 }
-                res.json(task);
+                res.json(user);
             });
         });
 
-    app.route('/tasks/:_id')
+    app.route('/users/:_id')
         .get((req, res) => {
-            Tasks.findOne(req.params, (err, task) => {
+            Users.findOne(req.params, (err, user) => {
                 if (err) {
                     res.status(400).json(err);
                     return;
                 }
-                res.json(task);
+                res.json(user);
             });
         })
         .put((req, res) => {
-            Tasks.findOne(req.params, (err, task) => {
+            Users.findOne(req.params, (err, user) => {
                 if (err) {
                     res.status(400).json(err);
                     return;
                 }
-                if (!task) {
+                if (!user) {
                     res.status(400).json({
                         id: req.params._id,
                         error: "Registro não encontrado"
                     });
                     return;
                 }
-                task.set(req.body);
-                task.save()
+                user.set(req.body);
+                user.save()
                     .then(updated => {
                         res.json(updated);
                     })
@@ -58,7 +58,7 @@ module.exports = app => {
             });
         })
         .delete((req, res) => {
-            Tasks.remove(req.params, err => {
+            Users.remove(req.params, err => {
                 if (err) {
                     res.status(400).json(err);
                     return;
