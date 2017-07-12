@@ -25,10 +25,11 @@ module.exports = app => {
             });
         });
 
-    app.route('/users/:_id')
+    app.route('/user')
         .all(app.libs.auth.authenticate())
         .get((req, res) => {
-            Users.findOne(req.params, (err, user) => {
+            const user = req.user;
+            Users.findOne({_id: user.id}, (err, user) => {
                 if (err) {
                     res.status(400).json(err);
                     return;
@@ -37,7 +38,8 @@ module.exports = app => {
             });
         })
         .put((req, res) => {
-            Users.findOne(req.params, (err, user) => {
+            const user = req.user;
+            Users.findOne({_id: user.id}, (err, user) => {
                 if (err) {
                     res.status(400).json(err);
                     return;
@@ -60,7 +62,8 @@ module.exports = app => {
             });
         })
         .delete((req, res) => {
-            Users.remove(req.params, err => {
+            const user = req.user;
+            Users.remove({_id: user.id}, err => {
                 if (err) {
                     res.status(400).json(err);
                     return;
