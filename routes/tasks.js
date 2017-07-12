@@ -6,7 +6,8 @@ module.exports = app => {
     app.route('/tasks')
         .all(app.libs.auth.authenticate())
         .get((req, res) => {
-            Tasks.find({})
+            const user = req.user;
+            Tasks.find({ 'user.id': user.id })
                 .exec((err, tasks) => {
                     if (err) {
                         res.status(400).json(err);
@@ -16,6 +17,11 @@ module.exports = app => {
                 });
         })
         .post((req, res) => {
+            const user = req.user;
+            req.body.user = {
+                id: user.id,
+                name: user.name
+            }
             Tasks.create(req.body, (err, task) => {
                 if (err) {
                     res.status(400).json(err);
@@ -25,10 +31,11 @@ module.exports = app => {
             });
         });
 
-    app.route('/tasks/:_id')
+    app.route('/tasks/:id')
         .all(app.libs.auth.authenticate())
         .get((req, res) => {
-            Tasks.findOne(req.params, (err, task) => {
+            const user = req.user;
+            Tasks.findOne({ _id: req.params.id, 'user.id': user.id }, (err, task) => {
                 if (err) {
                     res.status(400).json(err);
                     return;
@@ -37,7 +44,7 @@ module.exports = app => {
             });
         })
         .put((req, res) => {
-            Tasks.findOne(req.params, (err, task) => {
+            Tasks.findOne({ _id: req.params.id, 'user.id': user.id }, (err, task) => {
                 if (err) {
                     res.status(400).json(err);
                     return;
@@ -60,7 +67,7 @@ module.exports = app => {
             });
         })
         .delete((req, res) => {
-            Tasks.remove(req.params, err => {
+            Tasks.remove({ _id: req.params.id, 'user.id': user.id }, err => {
                 if (err) {
                     res.status(400).json(err);
                     return;

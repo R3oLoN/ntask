@@ -20,7 +20,8 @@ module.exports = app => {
             }
             return done(null, {
                 id: user._id,
-                email: user.email
+                email: user.email,
+                name: user.name
             });
         });
     }));
