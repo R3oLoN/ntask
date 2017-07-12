@@ -26,6 +26,8 @@
   },
   "dependencies": {
     "consign": "^0.1.2",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "mongoose": "^4.11.1",
+    "mongoose-schema-jsonschema": "^1.1.13"
   }
 }
