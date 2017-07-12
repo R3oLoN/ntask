@@ -34,7 +34,7 @@ const Users = new Schema({
 }, { timestamps: true });
 
 Users.pre('create', encryptPassword);
-Users.pre('save', encryptPassword);
+Users.pre('save', encryptPassword); 
 
 function encryptPassword(next) {
     var user = this;
