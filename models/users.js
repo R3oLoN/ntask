@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt-nodejs'
 const Schema = mongoose.Schema;
+const SALT_WORK_FACTOR = 10
 
 const Users = new Schema({
     name: {
@@ -30,5 +32,22 @@ const Users = new Schema({
         }
     }
 }, { timestamps: true });
+
+Users.pre('create', encryptPassword);
+Users.pre('save', encryptPassword);
+
+function encryptPassword(next) {
+    var user = this;
+    console.log(user.isModified('password'));
+    if (!user.isModified('password')) return next();
+    bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
+        if (err) return next(err);
+        bcrypt.hash(user.password, salt, () => {},(err, hash) => {
+            if (err) return next(err);
+            user.password = hash;
+            next();
+        });
+    });
+}
 
 mongoose.model('users', Users);
