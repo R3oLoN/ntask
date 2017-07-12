@@ -19,11 +19,11 @@ const Users = new Schema({
     },
     email: {
         type: String,
-        required: [true, 'o e-mail é obrigatóri0'],
+        required: [true, 'o e-mail é obrigatório'],
         min: [7, 'o e-mail deve conter no mínimo 7 caracteres'],
         max: [50, 'o e-mail deve conter no máximo 50 caracteres'],
         lowercase: true,
-        unique: true,
+        unique: [true, 'Já existe um usuário cadastrado para o e-mail informado'],
         validate: {
             validator: function (value) {
                 return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(value);
