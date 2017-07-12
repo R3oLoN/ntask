@@ -4,6 +4,7 @@ module.exports = app => {
     const Users = mongoose.model('users');
 
     app.route('/users')
+        .all(app.libs.auth.authenticate())
         .get((req, res) => {
             Users.find({})
                 .exec((err, users) => {
@@ -25,6 +26,7 @@ module.exports = app => {
         });
 
     app.route('/users/:_id')
+        .all(app.libs.auth.authenticate())
         .get((req, res) => {
             Users.findOne(req.params, (err, user) => {
                 if (err) {

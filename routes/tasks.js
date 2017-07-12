@@ -4,6 +4,7 @@ module.exports = app => {
     const Tasks = mongoose.model('tasks');
 
     app.route('/tasks')
+        .all(app.libs.auth.authenticate())
         .get((req, res) => {
             Tasks.find({})
                 .exec((err, tasks) => {
@@ -25,6 +26,7 @@ module.exports = app => {
         });
 
     app.route('/tasks/:_id')
+        .all(app.libs.auth.authenticate())
         .get((req, res) => {
             Tasks.findOne(req.params, (err, task) => {
                 if (err) {

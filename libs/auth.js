@@ -9,8 +9,9 @@ module.exports = app => {
         secretOrKey: cfg.jwtSecret,
         jwtFromRequest: ExtractJwt.fromAuthHeader()
     }
-    passport.use(new Strategy(params, (playload, done) => {
-        Users.findOne({ _id: playload.id }, (err, user) => {
+    passport.use(new Strategy(params, (payload, done) => {
+        console.log(payload);
+        Users.findOne({ _id: payload.id }, (err, user) => {
             if (err) {
                 done(err, null);
             }
