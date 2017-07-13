@@ -1,11 +1,12 @@
 import mongoose from 'mongoose';
+import config from './config.js';
 
 mongoose.Promise = global.Promise
 require('mongoose-schema-jsonschema')(mongoose)
 
 module.exports = (uri) => {
-  mongoose.connect(uri);
-  mongoose.set('debug', true);
+  mongoose.connection.openUri(uri);
+  mongoose.set('debug', config.logging);
   mongoose.connection.on('connected', () => {
     console.log('Conectado ao MongoDB em', uri);
   });

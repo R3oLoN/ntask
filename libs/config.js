@@ -1,7 +1,6 @@
-module.exports = {
-    database: 'mongodb://localhost/ntask',
-    username: '',
-    password: '',
-    jwtSecret: 'Nt@$K-AP1',
-    jwtSession: { session: false }
+const env = process.env.NODE_ENV;
+if (env) {
+    module.exports = require(`./config.${env.trim()}.js`);
+} else {
+    module.exports = require('./config.development.js');
 }
