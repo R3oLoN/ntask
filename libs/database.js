@@ -8,7 +8,7 @@ module.exports = (uri) => {
   mongoose.connection.openUri(uri);
   mongoose.set('debug', config.logging);
   mongoose.connection.on('connected', () => {
-    console.log('Conectado ao MongoDB em', uri);
+    if(config.logging) console.log('Conectado ao MongoDB em', uri);
   });
   mongoose.connection.on('error', error => {
     console.log('Erro na conexão:', error);
