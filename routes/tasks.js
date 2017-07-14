@@ -31,7 +31,7 @@ module.exports = app => {
             });
         });
 
-    app.route('/tasks/:id')
+    app.route('/task/:id')
         .all(app.libs.auth.authenticate())
         .get((req, res) => {
             const user = req.user;
