@@ -10,6 +10,10 @@ describe('Routes: Tasks', () => {
     let token;
     let user;
     beforeEach(done => {
+        tasks = [];
+        fakeTask = null;
+        token = null;
+        user = null;
         User.remove({}, () => {
             User.create({
                 name: 'Leandro Reolon',
@@ -34,7 +38,7 @@ describe('Routes: Tasks', () => {
                             return;
                         }
                         tasks.push(task);
-                        fakeTask = tasks[0];
+                        fakeTask = JSON.parse(JSON.stringify(tasks[0]));
                         token = jwt.encode({
                             id: newUser._id
                         }, jwtSecret);
@@ -93,38 +97,62 @@ describe('Routes: Tasks', () => {
     describe('GET /task/:id', () => {
         describe('status 200', () => {
             it('returns one task', done => {
-                console.log(`/task/${fakeTask._id}`);
                 request.get(`/task/${fakeTask._id}`)
                     .set(AUTHORIZATION, `JWT ${token}`)
                     .expect(200)
                     .end((err, res) => {
-                        console.log(res);
-                        expect(res._id).to.eql(fakeTask._id);
-                        expect(res.title).to.eql(fakeTask.title);
-                        expect(res.user._id).to.eql(fakeTask.user.id);
-                        expect(res.user.name).to.eql(fakeTask.user.name);
-                        expect(res.done).to.be.false;
+                        expect(res.body._id).to.eql(fakeTask._id);
+                        expect(res.body.title).to.eql(fakeTask.title);
+                        expect(res.body.user.id).to.eql(fakeTask.user.id);
+                        expect(res.body.user.name).to.eql(fakeTask.user.name);
+                        expect(res.body.done).to.be.false;
                         done(err);
                     });
             });
         });
         describe('status 404', () => {
+            beforeEach(done => {
+                Tasks.remove({ _id: fakeTask._id }, () => {
+                    done();
+                });
+            });
             it('throws error when task not exists', done => {
- done({})
+                request.get(`/task/${fakeTask._id}`)
+                    .set(AUTHORIZATION, `JWT ${token}`)
+                    .expect(404)
+                    .end((err, res) => {
+                        expect(res.body.id).to.eql(fakeTask._id);
+                        expect(res.body.error).to.eql('Registro não encontrado');
+                        done(err);
+                    });
             });
         });
     });
     describe('PUT /task/:id', () => {
-        describe('status 204', () => {
+        describe('status 200', () => {
             it('update a task', done => {
-done({})
+                request.put(`/task/${fakeTask._id}`)
+                    .set(AUTHORIZATION, `JWT ${token}`)
+                    .send({
+                        title: "Travel",
+                        done: true
+                    })
+                    .expect(200)
+                    .end((err, res) => {
+                        expect(res.body.title).to.eql("Travel");
+                        expect(res.body.done).to.be.true;
+                        done(err);
+                    });
             });
         });
     });
     describe('DELETE /task/:id', () => {
         describe('status 204', () => {
             it('remove a task', done => {
-done({})
+                request.delete(`/task/${fakeTask._id}`)
+                    .set(AUTHORIZATION, `JWT ${token}`)
+                    .expect(204)
+                    .end((err, res) => done(err));
             });
         });
     });

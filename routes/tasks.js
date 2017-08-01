@@ -40,10 +40,18 @@ module.exports = app => {
                     res.status(400).json(err);
                     return;
                 }
+                if (!task) {
+                    res.status(404).json({
+                        id: req.params.id,
+                        error: "Registro não encontrado"
+                    });
+                    return;
+                }
                 res.json(task);
             });
         })
         .put((req, res) => {
+            const user = req.user;
             Tasks.findOne({ _id: req.params.id, 'user.id': user.id }, (err, task) => {
                 if (err) {
                     res.status(400).json(err);
@@ -51,7 +59,7 @@ module.exports = app => {
                 }
                 if (!task) {
                     res.status(400).json({
-                        id: req.params._id,
+                        id: req.params.id,
                         error: "Registro não encontrado"
                     });
                     return;
@@ -67,6 +75,7 @@ module.exports = app => {
             });
         })
         .delete((req, res) => {
+            const user = req.user;
             Tasks.remove({ _id: req.params.id, 'user.id': user.id }, err => {
                 if (err) {
                     res.status(400).json(err);
