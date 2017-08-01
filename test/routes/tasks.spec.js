@@ -38,7 +38,7 @@ describe('Routes: Tasks', () => {
                             return;
                         }
                         tasks.push(task);
-                        fakeTask = JSON.parse(JSON.stringify(tasks[0]));
+                        fakeTask = Utils.copy(tasks[0]);
                         token = jwt.encode({
                             id: newUser._id
                         }, jwtSecret);

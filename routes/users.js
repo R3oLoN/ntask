@@ -46,7 +46,7 @@ module.exports = app => {
                 }
                 if (!user) {
                     res.status(400).json({
-                        id: req.params._id,
+                        id: user.id,
                         error: "Registro não encontrado"
                     });
                     return;

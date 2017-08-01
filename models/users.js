@@ -8,7 +8,7 @@ const Users = new Schema({
         type: String,
         required: [true, 'O nome é obrigatório'],
         min: [1, 'O nome é obrigatório'],
-        max: [1, 'O nome deve conter no máximo 100 caracteres'],
+        max: [100, 'O nome deve conter no máximo 100 caracteres'],
         trim: true
     },
     password: {

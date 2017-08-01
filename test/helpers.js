@@ -7,3 +7,7 @@ global.app = app;
 global.request = supertest(app);
 global.expect = chai.expect;
 global.mongoose = mongoose;
+
+global.Utils = {
+    copy: (value) => {return JSON.parse(JSON.stringify(value));}
+}
