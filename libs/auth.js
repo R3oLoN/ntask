@@ -12,7 +12,7 @@ module.exports = app => {
     passport.use(new Strategy(params, (payload, done) => {
         Users.findOne({ _id: payload.id }, (err, user) => {
             if (err) {
-                done(err, null);
+                return done(err, null);
             }
             if (!user) {
                 return done(null, false);
