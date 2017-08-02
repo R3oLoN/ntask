@@ -15,7 +15,8 @@ const Users = new Schema({
         type: String,
         required: [true, 'A senha é obrigatória'],
         min: [4, 'A senha deve conter no mínimo 4 caracteres'],
-        max: [10, 'A senha deve conter no máximo 10 caracteres']
+        max: [10, 'A senha deve conter no máximo 10 caracteres'],
+        select: false 
     },
     email: {
         type: String,
