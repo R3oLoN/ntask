@@ -21,6 +21,7 @@ module.exports = app => {
      *  {token: 'xyz.abc.123.hgf'}
      * @apiErrorExample {json} Erro de autenticação
      *  HTTP/1.1 401 Unauthorized
+     * @apiVersion 1.0.0
      */
     app.post("/token", (req, res) => {
         if (req.body.email && req.body.password) {
