@@ -40,7 +40,9 @@
     "jwt-simple": "^0.4.1",
     "mongoose": "^4.11.1",
     "mongoose-schema-jsonschema": "^1.1.13",
+    "morgan": "^1.6.1",
     "passport": "^0.3.2",
-    "passport-jwt": "^2.0.0"
+    "passport-jwt": "^2.0.0",
+    "winston": "^2.1.1"
   }
 }
