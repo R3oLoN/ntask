@@ -11,12 +11,12 @@ module.exports = app => {
         * @apiHeader {String} Authorization Token de usuário
         * @apiHeaderExample {json} Entrada
         *   {Authorization: 'JWT xyz.abc.123.hgf'}
-        * @apiSuccess {Object[]} users Lista de usuários
-        * @apiSuccess {String} _id Id de registro
-        * @apiSuccess {String} name Nome
-        * @apiSuccess {String} email Email
-        * @apiSuccess {Date} createdAt Data de cadastro
-        * @apiSuccess {Date} updatedAt Data de alteração
+        * @apiSuccess {Object[]} user Usuário
+        * @apiSuccess {String} user._id Id de registro
+        * @apiSuccess {String} user.name Nome
+        * @apiSuccess {String} user.email Email
+        * @apiSuccess {Date} user.createdAt Data de cadastro
+        * @apiSuccess {Date} user.updatedAt Data de alteração
         * @apiSuccessExample {json} Sucesso
         *  HTTP/1.1 200 Ok
         *  [
@@ -45,9 +45,9 @@ module.exports = app => {
         /**
         * @api {post} /users Cadastrar novos usuários
         * @apiGroup Usuários
-        * @apiParam {String} name       Nome
-        * @apiParam {String} email      Email
-        * @apiParam {String} password   Senha
+        * @apiParam {String{1..100}} name       Nome
+        * @apiParam {String{7..50}} email      Email
+        * @apiParam {String{4..10}} password   Senha
         * @apiParamExample {json} Entrada
         *   {
         *   	"name": "Leandro Reolon",
