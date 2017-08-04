@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
+import mongoose, { Schema } from 'mongoose';
+import mongooseHistory from 'mongoose-history';
 
 const Tasks = new Schema({
 	title: {
@@ -28,5 +28,7 @@ const Tasks = new Schema({
 		}
 	}
 }, { timestamps: true });
+
+Tasks.plugin(mongooseHistory);
 
 mongoose.model('tasks', Tasks);

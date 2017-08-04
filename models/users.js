@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
+import mongooseHistory from 'mongoose-history';
 import bcrypt from 'bcrypt-nodejs';
-const Schema = mongoose.Schema;
 const SALT_WORK_FACTOR = 10
 
 const Users = new Schema({
@@ -33,6 +33,8 @@ const Users = new Schema({
         }
     }
 }, { timestamps: true });
+
+Users.plugin(mongooseHistory);
 
 Users.pre('create', encryptPassword);
 Users.pre('save', encryptPassword); 
