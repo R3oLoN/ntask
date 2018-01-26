@@ -59,3 +59,5 @@ typings/
 
 public/apidoc
 .idea/
+.vscode
+api/public/apidoc

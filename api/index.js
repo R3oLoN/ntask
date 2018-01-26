@@ -10,6 +10,7 @@ const app = express();
 consign()
     .include('libs/config.js')
     .then('models')
+    .then('relations')
     .then('libs/auth.js')
     .then('libs/middleware.js')
     .then('routes')
